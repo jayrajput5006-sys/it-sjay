@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ultimate Magic Surprise for Arya 💖</title>
+<title>Arya Praise Surprise 💖</title>
 <style>
 body {
   margin:0;
@@ -158,20 +158,36 @@ button:hover{transform:scale(1.2) rotate(-5deg);}
   0%{opacity:0.3;}
   100%{opacity:1;}
 }
+/* Compliment bubbles */
+.compliment{
+  position:absolute;
+  padding:5px 10px;
+  background: rgba(255,255,255,0.8);
+  color:#ff1493;
+  font-weight:bold;
+  border-radius:15px;
+  animation: complimentMove linear forwards;
+  opacity:0;
+  pointer-events:none;
+}
+@keyframes complimentMove{
+  0%{transform:translateY(0); opacity:1;}
+  100%{transform:translateY(-600px); opacity:0;}
+}
 </style>
 </head>
 <body>
 
-<audio autoplay loop>
+<audio id="bgMusic" autoplay loop>
   <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
 </audio>
 
 <h1>Hey Arya 💖</h1>
-<p> Hello cutie tune toh batya nhi ki tuje kya pasand h so mene y bna diya bs tere liye 🌸✨</p>
+<p>Hanji Cutie i hope tuje y pasand ayega 🌸✨</p>
 <button id="surpriseBtn">Click for a Magical Surprise 🎁</button>
 
 <div id="surpriseOverlay">
-  <h2 id="message">Arya 💖 Han ji kesa lga batana jarur </h2>
+  <h2 id="message">Arya 💖 thank you yrr</h2>
   <button id="closeOverlay">Close</button>
 </div>
 
@@ -179,17 +195,22 @@ button:hover{transform:scale(1.2) rotate(-5deg);}
 const overlay = document.getElementById('surpriseOverlay');
 const surpriseBtn = document.getElementById('surpriseBtn');
 const closeBtn = document.getElementById('closeOverlay');
-const message = document.getElementById('message');
+const bgMusic = document.getElementById('bgMusic');
 
 surpriseBtn.addEventListener('click', () => {
   overlay.style.display = 'flex';
+  bgMusic.play();
   spawnFloatingHearts();
   spawnOrbitHearts();
   triggerFireworks();
   spawnStars();
+  spawnCompliments();
 });
-
-closeBtn.addEventListener('click', () => overlay.style.display = 'none');
+closeBtn.addEventListener('click', () => {
+  overlay.style.display = 'none';
+  bgMusic.pause();
+  bgMusic.currentTime = 0;
+});
 
 // Floating hearts
 function spawnFloatingHearts(){
@@ -262,31 +283,42 @@ function spawnStars(){
   }
 }
 
-// Click anywhere mini sparkles
+// Compliments
+const compliments = ["Cute 😍", "Beautiful 🌸", "Smart 💡", "Amazing 💖", "Lovely ✨", , "Adorable 💕"];
+function spawnCompliments(){
+  let interval = setInterval(()=>{
+    if(overlay.style.display==='none'){clearInterval(interval); return;}
+    let c = document.createElement('div');
+    c.classList.add('compliment');
+    c.innerText = compliments[Math.floor(Math.random()*compliments.length)];
+    c.style.left = Math.random()*window.innerWidth + 'px';
+    c.style.top = window.innerHeight + 'px';
+    overlay.appendChild(c);
+    c.style.opacity = 1;
+    c.style.animationDuration = (4 + Math.random()*2) + 's';
+    setTimeout(()=>c.remove(),6000);
+  },400);
+}
+
+// Click anywhere mini compliment bursts
 overlay.addEventListener('click',(e)=>{
   if(e.target.id!=='closeOverlay'){
-    createSparkle(e.clientX,e.clientY);
+    spawnClickCompliments(e.clientX,e.clientY);
   }
 });
-function createSparkle(x,y){
-  let colors = ["#ff4d6d","#ffd700","#ff69b4","#00ffff","#ff4500"];
-  for(let i=0;i<10;i++){
-    let s = document.createElement('div');
-    s.style.position='absolute';
-    s.style.left=x+'px';
-    s.style.top=y+'px';
-    let size = 4+Math.random()*4;
-    s.style.width=size+'px';
-    s.style.height=size+'px';
-    s.style.borderRadius='50%';
-    s.style.backgroundColor=colors[Math.floor(Math.random()*colors.length)];
-    overlay.appendChild(s);
-    let angle = Math.random()*2*Math.PI;
-    let dist = 50+Math.random()*30;
-    let dx=Math.cos(angle)*dist;
-    let dy=Math.sin(angle)*dist;
-    s.animate([{transform:`translate(0,0)`,opacity:1},{transform:`translate(${dx}px,${dy}px)`,opacity:0}],{duration:800,easing:'ease-out'});
-    setTimeout(()=>s.remove(),800);
+function spawnClickCompliments(x,y){
+  for(let i=0;i<5;i++){
+    let c = document.createElement('div');
+    c.classList.add('compliment');
+    c.innerText = compliments[Math.floor(Math.random()*compliments.length)];
+    c.style.left = x + 'px';
+    c.style.top = y + 'px';
+    overlay.appendChild(c);
+    c.style.opacity = 1;
+    let dx = (Math.random()-0.5)*100;
+    let dy = -50-Math.random()*50;
+    c.animate([{transform:`translate(0,0)`, opacity:1},{transform:`translate(${dx}px,${dy}px)`,opacity:0}],{duration:1000,easing:'ease-out'});
+    setTimeout(()=>c.remove(),1000);
   }
 }
 </script>
