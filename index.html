@@ -65,7 +65,6 @@ button{
 }
 button:hover{transform:scale(1.2) rotate(-5deg);}
 
-/* Surprise Overlay */
 #surpriseOverlay{
   position:fixed;
   top:0; left:0;
@@ -95,7 +94,6 @@ button:hover{transform:scale(1.2) rotate(-5deg);}
   0%{text-shadow:2px 2px 10px #ffb6c1, 0 0 20px #ff69b4;}
   100%{text-shadow:2px 2px 20px #ffb6c1, 0 0 40px #ff1493;}
 }
-/* Glowing Close Button */
 #closeOverlay{
   position: absolute;
   top: 20px;
@@ -120,7 +118,6 @@ button:hover{transform:scale(1.2) rotate(-5deg);}
   0% {box-shadow: 0 0 10px #ff4d6d, 0 0 20px #ff69b4, 0 0 30px #ff1493;}
   100% {box-shadow: 0 0 20px #ff4d6d, 0 0 40px #ff69b4, 0 0 60px #ff1493;}
 }
-/* Floating hearts */
 .floatingHeart{
   position:absolute;
   width:25px; height:25px;
@@ -133,7 +130,6 @@ button:hover{transform:scale(1.2) rotate(-5deg);}
   0%{transform:translateY(0); opacity:1;}
   100%{transform:translateY(-100vh); opacity:0;}
 }
-/* Orbiting hearts + emojis */
 .orbitHeart{
   position:absolute;
   width:20px; height:20px;
@@ -145,7 +141,6 @@ button:hover{transform:scale(1.2) rotate(-5deg);}
   from{transform: rotate(0deg) translateX(80px) rotate(0deg);}
   to{transform: rotate(360deg) translateX(80px) rotate(-360deg);}
 }
-/* Twinkling stars */
 .star{
   position:absolute;
   width:2px; height:2px;
@@ -158,7 +153,6 @@ button:hover{transform:scale(1.2) rotate(-5deg);}
   0%{opacity:0.3;}
   100%{opacity:1;}
 }
-/* Compliment bubbles */
 .compliment{
   position:absolute;
   padding:5px 10px;
@@ -178,14 +172,18 @@ button:hover{transform:scale(1.2) rotate(-5deg);}
 </head>
 <body>
 
-
+<audio id="bgMusic" autoplay loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_d5f48f181c.mp3?filename=romantic-background-music-10540.mp3" type="audio/mpeg">
+</audio>
 
 <h1>Hey Arya 💖</h1>
-<p>Hanji Cutie i hope tuje y pasand ayega 🌸✨</p>
+<p>Oye Cutie kesa lga btana ek baat batau mene tera no abhi bhi save nhi kiya  🌸✨</p>
 <button id="surpriseBtn">Click for a Magical Surprise 🎁</button>
 
 <div id="surpriseOverlay">
-  <h2 id="message">Arya 💖 thank you yrr</h2>
+  <h2 id="message">Arya 💖 y tere liye</h2>
+    <h2>Tum woh chand ho jis pr koi daag nhi </h2> 
+    <h2>Tum itni khubsoorat ho jiska koi hisab nhi!</h2>
   <button id="closeOverlay">Close</button>
 </div>
 
@@ -210,7 +208,6 @@ closeBtn.addEventListener('click', () => {
   bgMusic.currentTime = 0;
 });
 
-// Floating hearts
 function spawnFloatingHearts(){
   let interval = setInterval(()=>{
     if(overlay.style.display==='none'){clearInterval(interval); return;}
@@ -226,7 +223,6 @@ function spawnFloatingHearts(){
   },200);
 }
 
-// Orbiting hearts/emojis
 function spawnOrbitHearts(){
   const centerX = window.innerWidth/2;
   const centerY = window.innerHeight/2;
@@ -241,7 +237,6 @@ function spawnOrbitHearts(){
   }
 }
 
-// Fireworks effect
 function triggerFireworks(){
   function createFirework(x,y){
     let colors = ["#ff4d6d","#ffd700","#ff69b4","#00ffff","#ff4500"];
@@ -270,7 +265,6 @@ function triggerFireworks(){
   },800);
 }
 
-// Stars in background
 function spawnStars(){
   for(let i=0;i<50;i++){
     let star = document.createElement('div');
@@ -281,8 +275,7 @@ function spawnStars(){
   }
 }
 
-// Compliments
-const compliments = ["Cute 😍", "Beautiful 🌸", "Smart 💡", "Amazing 💖", "Lovely ✨", , "Adorable 💕"];
+const compliments = ["Cute 😍", "Beautiful 🌸", "Smart 💡", "Amazing 💖", "Lovely ✨", "Adorable 💕"];
 function spawnCompliments(){
   let interval = setInterval(()=>{
     if(overlay.style.display==='none'){clearInterval(interval); return;}
@@ -298,7 +291,6 @@ function spawnCompliments(){
   },400);
 }
 
-// Click anywhere mini compliment bursts
 overlay.addEventListener('click',(e)=>{
   if(e.target.id!=='closeOverlay'){
     spawnClickCompliments(e.clientX,e.clientY);
@@ -322,4 +314,3 @@ function spawnClickCompliments(x,y){
 </script>
 </body>
 </html>
-
